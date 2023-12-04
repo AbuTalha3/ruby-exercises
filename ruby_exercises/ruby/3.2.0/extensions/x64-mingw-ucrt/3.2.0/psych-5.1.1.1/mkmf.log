@@ -1,0 +1,109 @@
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" x86_64-w64-mingw32-pkg-config --exists yaml-0.1
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" x86_64-w64-mingw32-pkg-config --libs yaml-0.1 |
+=> "-LC:/Ruby32-x64/msys64/ucrt64/bin/../lib -lyaml \n"
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" "gcc -o conftest.exe -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I. -D__USE_MINGW_ANSI_STDIO=1 -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -DYAML_DECLARE_STATIC -O3 -fno-fast-math -fstack-protector-strong conftest.c  -L. -LC:/Ruby32-x64/lib -L. -pipe -s -fstack-protector-strong -Wl,--no-as-needed  -m64   -lx64-ucrt-ruby320  -lshell32 -lws2_32 -liphlpapi -limagehlp -lshlwapi -lbcrypt  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" "gcc -o conftest.exe -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I. -D__USE_MINGW_ANSI_STDIO=1 -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -DYAML_DECLARE_STATIC -O3 -fno-fast-math -fstack-protector-strong conftest.c  -L. -LC:/Ruby32-x64/lib -L. -pipe -s -fstack-protector-strong -Wl,--no-as-needed  -m64   -lx64-ucrt-ruby320 -LC:/Ruby32-x64/msys64/ucrt64/bin/../lib -lyaml -lshell32 -lws2_32 -liphlpapi -limagehlp -lshlwapi -lbcrypt  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" x86_64-w64-mingw32-pkg-config --cflags-only-I yaml-0.1 |
+=> "-IC:/Ruby32-x64/msys64/ucrt64/bin/../include \n"
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" x86_64-w64-mingw32-pkg-config --cflags-only-other yaml-0.1 |
+=> "\n"
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" x86_64-w64-mingw32-pkg-config --libs-only-l yaml-0.1 |
+=> "-lyaml \n"
+package configuration for yaml-0.1
+incflags: -IC:/Ruby32-x64/msys64/ucrt64/bin/../include
+cflags: 
+ldflags: -LC:/Ruby32-x64/msys64/ucrt64/bin/../lib
+libs: -lyaml
+
+find_header: checking for yaml.h... -------------------- yes
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" "gcc -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I. -IC:/Ruby32-x64/msys64/ucrt64/bin/../include -D__USE_MINGW_ANSI_STDIO=1 -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -DYAML_DECLARE_STATIC -O3 -fno-fast-math -fstack-protector-strong  -m64  -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: #include <yaml.h>
+/* end */
+
+--------------------
+
+find_library: checking for yaml_get_version() in -lyaml... -------------------- yes
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" "gcc -o conftest.exe -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I. -IC:/Ruby32-x64/msys64/ucrt64/bin/../include -D__USE_MINGW_ANSI_STDIO=1 -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -DYAML_DECLARE_STATIC -O3 -fno-fast-math -fstack-protector-strong  conftest.c  -L. -LC:/Ruby32-x64/lib -L. -pipe -s -fstack-protector-strong -Wl,--no-as-needed -LC:/Ruby32-x64/msys64/ucrt64/bin/../lib  -m64   -lyaml -lx64-ucrt-ruby320 -lyaml  -lyaml -lshell32 -lws2_32 -liphlpapi -limagehlp -lshlwapi -lbcrypt  "
+conftest.c: In function 't':
+conftest.c:17:57: error: 'yaml_get_version' undeclared (first use in this function)
+   17 | int t(void) { void ((*volatile p)()); p = (void ((*)()))yaml_get_version; return !p; }
+      |                                                         ^~~~~~~~~~~~~~~~
+conftest.c:17:57: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <winsock2.h>
+ 4: #include <windows.h>
+ 5: 
+ 6: /*top*/
+ 7: extern int t(void);
+ 8: int main(int argc, char **argv)
+ 9: {
+10:   if (argc > 1000000) {
+11:     int (* volatile tp)(void)=(int (*)(void))&t;
+12:     printf("%d", (*tp)());
+13:   }
+14: 
+15:   return !!argv[argc];
+16: }
+17: int t(void) { void ((*volatile p)()); p = (void ((*)()))yaml_get_version; return !p; }
+/* end */
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Abu Talha\Downloads\sqlite3;C:\Ruby32-x64\bin;C:\Users\Abu Talha\AppData\Local\Microsoft\WindowsApps;C:\Users\Abu Talha\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\Abu Talha\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Local\GitHubDesktop\bin;C:\Users\Abu Talha\AppData\Roaming\npm" "gcc -o conftest.exe -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I. -IC:/Ruby32-x64/msys64/ucrt64/bin/../include -D__USE_MINGW_ANSI_STDIO=1 -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -DYAML_DECLARE_STATIC -O3 -fno-fast-math -fstack-protector-strong  conftest.c  -L. -LC:/Ruby32-x64/lib -L. -pipe -s -fstack-protector-strong -Wl,--no-as-needed -LC:/Ruby32-x64/msys64/ucrt64/bin/../lib  -m64   -lyaml -lx64-ucrt-ruby320 -lyaml  -lyaml -lshell32 -lws2_32 -liphlpapi -limagehlp -lshlwapi -lbcrypt  "
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <winsock2.h>
+ 4: #include <windows.h>
+ 5: 
+ 6: /*top*/
+ 7: extern int t(void);
+ 8: int main(int argc, char **argv)
+ 9: {
+10:   if (argc > 1000000) {
+11:     int (* volatile tp)(void)=(int (*)(void))&t;
+12:     printf("%d", (*tp)());
+13:   }
+14: 
+15:   return !!argv[argc];
+16: }
+17: extern void yaml_get_version();
+18: int t(void) { yaml_get_version(); return 0; }
+/* end */
+
+--------------------
+

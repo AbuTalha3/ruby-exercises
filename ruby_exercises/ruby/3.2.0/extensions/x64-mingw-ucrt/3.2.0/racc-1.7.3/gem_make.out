@@ -1,0 +1,23 @@
+current directory: C:/Users/Abu Talha/Desktop/RUBY/ruby-exercises/ruby_exercises/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+C:/Ruby32-x64/bin/ruby.exe extconf.rb
+creating Makefile
+
+current directory: C:/Users/Abu Talha/Desktop/RUBY/ruby-exercises/ruby_exercises/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20231204-58780-3b6q77 sitelibdir\=./.gem.20231204-58780-3b6q77 clean
+bash.exe: warning: could not find /tmp, please create!
+
+current directory: C:/Users/Abu Talha/Desktop/RUBY/ruby-exercises/ruby_exercises/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20231204-58780-3b6q77 sitelibdir\=./.gem.20231204-58780-3b6q77
+generating cparse-x64-mingw-ucrt.def
+bash.exe: warning: could not find /tmp, please create!
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: C:/Users/Abu Talha/Desktop/RUBY/ruby-exercises/ruby_exercises/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20231204-58780-3b6q77 sitelibdir\=./.gem.20231204-58780-3b6q77 install
+bash.exe: warning: could not find /tmp, please create!
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20231204-58780-3b6q77/racc
+
+current directory: C:/Users/Abu Talha/Desktop/RUBY/ruby-exercises/ruby_exercises/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20231204-58780-3b6q77 sitelibdir\=./.gem.20231204-58780-3b6q77 clean
+bash.exe: warning: could not find /tmp, please create!
