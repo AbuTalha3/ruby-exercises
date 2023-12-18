@@ -32,7 +32,7 @@ Which should print a few lines about not finding any examples. This is ok and me
 
 If your shell reports that it cannot find the rspec binary, it may be necessary to run the following command:
 
-    rbenv rehash
+    `rbenv rehash`
 
 ## Usage
 
