@@ -22,17 +22,17 @@ Now before beginning work on the exercises, you'll want to install a gem called 
 
 To install RSpec, run the following command in your terminal:
 
-    gem install rspec
+    `gem install rspec`
 
 You should see a message that says something along the lines of "6 gems installed" in your terminal. Verify that the installation was successful by simply running the following command:
 
-    rspec
+    `rspec`
 
 Which should print a few lines about not finding any examples. This is ok and means it's working!
 
 If your shell reports that it cannot find the rspec binary, it may be necessary to run the following command:
 
-    rbenv rehash
+    `rbenv rehash`
 
 ## Usage
 
