@@ -1,17 +1,16 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require_relative '../exercises/string_exercises'
 
 RSpec.describe 'String Exercises' do
-
   describe 'concatenation example exercise' do
-
     it 'returns "Classic Ruby"' do
       expect(concatenate_example('Ruby')).to eq('Classic Ruby')
     end
   end
 
   describe 'concatenation exercise' do
-
     it 'returns "Hello world!"' do
       expect(concatenate('world')).to eq('Hello world!')
     end
@@ -22,14 +21,12 @@ RSpec.describe 'String Exercises' do
   end
 
   describe 'substrings exercise' do
-
     xit 'returns the first 4 letters of the word' do
       expect(substrings('chocolate')).to eq('choc')
     end
   end
 
   describe 'capitalizing exercise' do
-
     xit 'capitalizes a word' do
       expect(capitalize('paris')).to eq('Paris')
     end
@@ -44,7 +41,6 @@ RSpec.describe 'String Exercises' do
   end
 
   describe 'uppercasing exercise' do
-
     xit 'uppercases a word' do
       expect(uppercase('small')).to eq('SMALL')
     end
@@ -56,7 +52,6 @@ RSpec.describe 'String Exercises' do
 
 
   describe 'downcasing exercise' do
-
     xit 'downcases a word' do
       expect(downcase('LARGE')).to eq('large')
     end
@@ -67,7 +62,6 @@ RSpec.describe 'String Exercises' do
   end
 
   describe 'empty exercise' do
-
     xit 'returns true if string is empty' do
       expect(empty_string('')).to eq(true)
     end
@@ -78,7 +72,6 @@ RSpec.describe 'String Exercises' do
   end
 
   describe 'length exercise' do
-
     xit 'returns the length of a word' do
       expect(string_length('longitude')).to eq(9)
     end
@@ -89,7 +82,6 @@ RSpec.describe 'String Exercises' do
   end
 
   describe 'reverse exercise' do
-
     xit 'reverses a word' do
       expect(reverse('desrever')).to eq('reversed')
     end
@@ -100,7 +92,6 @@ RSpec.describe 'String Exercises' do
   end
 
   describe 'remove spaces exercise' do
-
     xit 'removes a single space' do
       expect(space_remover('white space')).to eq('whitespace')
     end

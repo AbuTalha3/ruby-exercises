@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_support/core_ext/module/introspection"
+require 'active_support/core_ext/module/introspection'
 
 module AbstractController
   module Railties
@@ -10,7 +10,7 @@ module AbstractController
           define_method(:inherited) do |klass|
             super(klass)
 
-            if namespace = klass.module_parents.detect { |m| m.respond_to?(:railtie_routes_url_helpers) }
+            if (namespace = klass.module_parents.detect { |m| m.respond_to?(:railtie_routes_url_helpers) })
               klass.include(namespace.railtie_routes_url_helpers(include_path_helpers))
             else
               klass.include(routes.url_helpers(include_path_helpers))

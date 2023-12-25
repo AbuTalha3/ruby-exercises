@@ -19,9 +19,7 @@ module ActionController
     #
     # See +Rack::Utils::SYMBOL_TO_STATUS_CODE+ for a full list of valid +status+ symbols.
     def head(status, options = nil)
-      if status.is_a?(Hash)
-        raise ArgumentError, "#{status.inspect} is not a valid value for `status`."
-      end
+      raise ArgumentError, "#{status.inspect} is not a valid value for `status`." if status.is_a?(Hash)
 
       status ||= :ok
 
@@ -30,7 +28,7 @@ module ActionController
         content_type = options.delete(:content_type)
 
         options.each do |key, value|
-          headers[key.to_s.split(/[-_]/).each { |v| v[0] = v[0].upcase }.join("-")] = value.to_s
+          headers[key.to_s.split(/[-_]/).each { |v| v[0] = v[0].upcase }.join('-')] = value.to_s
         end
       end
 
@@ -38,28 +36,27 @@ module ActionController
       self.location = url_for(location) if location
 
       if include_content?(response_code)
-        unless self.media_type
-          self.content_type = content_type || ((f = formats) && Mime[f.first]) || Mime[:html]
-        end
+        self.content_type = content_type || ((f = formats) && Mime[f.first]) || Mime[:html] unless media_type
 
         response.charset = false
       end
 
-      self.response_body = ""
+      self.response_body = ''
 
       true
     end
 
     private
-      def include_content?(status)
-        case status
-        when 100..199
-          false
-        when 204, 205, 304
-          false
-        else
-          true
-        end
+
+    def include_content?(status)
+      case status
+      when 100..199
+        false
+      when 204, 205, 304
+        false
+      else
+        true
       end
+    end
   end
 end

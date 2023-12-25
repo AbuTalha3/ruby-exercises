@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def add(a, b)
   # return the result of adding a and b
   a + b

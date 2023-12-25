@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "abstract_controller/collector"
+require 'abstract_controller/collector'
 
 module ActionController # :nodoc:
   module MimeResponds
@@ -199,22 +199,18 @@ module ActionController # :nodoc:
     #     format.html.phone # this gets rendered
     #   end
     def respond_to(*mimes)
-      raise ArgumentError, "respond_to takes either types or a block, never both" if mimes.any? && block_given?
+      raise ArgumentError, 'respond_to takes either types or a block, never both' if mimes.any? && block_given?
 
       collector = Collector.new(mimes, request.variant)
       yield collector if block_given?
 
-      if format = collector.negotiate_format(request)
-        if media_type && media_type != format
-          raise ActionController::RespondToMismatchError
-        end
-        _process_format(format)
-        _set_rendered_content_type(format) unless collector.any_response?
-        response = collector.response
-        response.call if response
-      else
-        raise ActionController::UnknownFormat
-      end
+      raise ActionController::UnknownFormat unless (format = collector.negotiate_format(request))
+      raise ActionController::RespondToMismatchError if media_type && media_type != format
+
+      _process_format(format)
+      _set_rendered_content_type(format) unless collector.any_response?
+      response = collector.response
+      response&.call
     end
 
     # A container for responses available from the current controller for
@@ -257,15 +253,15 @@ module ActionController # :nodoc:
           custom(Mime::ALL, &block)
         end
       end
-      alias :all :any
+      alias all any
 
       def custom(mime_type, &block)
         mime_type = Mime::Type.lookup(mime_type.to_s) unless mime_type.is_a?(Mime::Type)
         @responses[mime_type] ||= if block_given?
-          block
-        else
-          VariantCollector.new(@variant)
-        end
+                                    block
+                                  else
+                                    VariantCollector.new(@variant)
+                                  end
       end
 
       def any_response?
@@ -276,7 +272,7 @@ module ActionController # :nodoc:
         response = @responses.fetch(format, @responses[Mime::ALL])
         if response.is_a?(VariantCollector) # `format.html.phone` - variant inline syntax
           response.variant
-        elsif response.nil? || response.arity == 0 # `format.html` - just a format, call its block
+        elsif response.nil? || response.arity.zero? # `format.html` - just a format, call its block
           response
         else # `format.html{ |variant| variant.phone }` - variant block syntax
           variant_collector = VariantCollector.new(@variant)
@@ -296,17 +292,17 @@ module ActionController # :nodoc:
         end
 
         def any(*args, &block)
-          if block_given?
-            if args.any? && args.none? { |a| a == @variant }
-              args.each { |v| @variants[v] = block }
-            else
-              @variants[:any] = block
-            end
+          return unless block_given?
+
+          if args.any? && args.none? { |a| a == @variant }
+            args.each { |v| @variants[v] = block }
+          else
+            @variants[:any] = block
           end
         end
-        alias :all :any
+        alias all any
 
-        def method_missing(name, *args, &block)
+        def method_missing(name, *_args, &block)
           @variants[name] = block if block_given?
         end
 
@@ -319,9 +315,10 @@ module ActionController # :nodoc:
         end
 
         private
-          def variant_key
-            @variant.find { |variant| @variants.key?(variant) } || :any
-          end
+
+        def variant_key
+          @variant.find { |variant| @variants.key?(variant) } || :any
+        end
       end
     end
   end

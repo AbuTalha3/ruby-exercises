@@ -9,10 +9,12 @@ module ActionController # :nodoc:
     end
 
     private
-      # The cookies for the current request. See ActionDispatch::Cookies for
-      # more information.
-      def cookies # :doc:
-        request.cookie_jar
-      end
+
+    # The cookies for the current request. See ActionDispatch::Cookies for
+    # more information.
+    # :doc:
+    def cookies
+      request.cookie_jar
+    end
   end
 end

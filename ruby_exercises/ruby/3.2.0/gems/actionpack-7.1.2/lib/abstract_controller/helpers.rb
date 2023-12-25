@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "active_support/dependencies"
-require "active_support/core_ext/name_error"
+require 'active_support/dependencies'
+require 'active_support/core_ext/name_error'
 
 module AbstractController
   module Helpers
@@ -9,7 +9,7 @@ module AbstractController
     extend ActiveSupport::Concern
 
     included do
-      class_attribute :_helper_methods, default: Array.new
+      class_attribute :_helper_methods, default: []
 
       # This is here so that it is always higher in the inheritance chain than
       # the definition in lib/action_view/rendering.rb
@@ -30,16 +30,14 @@ module AbstractController
         @path  = "helpers/#{path}.rb"
         set_backtrace error.backtrace
 
-        if /^#{path}(\.rb)?$/.match?(error.path)
-          super("Missing helper file helpers/%s.rb" % path)
-        else
-          raise error
-        end
+        raise error unless /^#{path}(\.rb)?$/.match?(error.path)
+
+        super('Missing helper file helpers/%s.rb' % path)
       end
     end
-    deprecate_constant "MissingHelperError", "AbstractController::Helpers::DeprecatedMissingHelperError",
-      message: "AbstractController::Helpers::MissingHelperError has been deprecated. If a Helper is not present, a NameError will be raised instead.",
-      deprecator: AbstractController.deprecator
+    deprecate_constant 'MissingHelperError', 'AbstractController::Helpers::DeprecatedMissingHelperError',
+                       message: 'AbstractController::Helpers::MissingHelperError has been deprecated. If a Helper is not present, a NameError will be raised instead.',
+                       deprecator: AbstractController.deprecator
 
     def _helpers
       self.class._helpers
@@ -56,14 +54,14 @@ module AbstractController
             helper_prefix = helper_prefix.camelize unless helper_prefix.start_with?(/[A-Z]/)
             "#{helper_prefix}Helper".constantize
           else
-            raise ArgumentError, "helper must be a String, Symbol, or Module"
+            raise ArgumentError, 'helper must be a String, Symbol, or Module'
           end
         end
       end
 
       def all_helpers_from_path(path)
         helpers = Array(path).flat_map do |_path|
-          names = Dir["#{_path}/**/*_helper.rb"].map { |file| file[_path.to_s.size + 1..-"_helper.rb".size - 1] }
+          names = Dir["#{_path}/**/*_helper.rb"].map { |file| file[_path.to_s.size + 1..-'_helper.rb'.size - 1] }
           names.sort!
         end
         helpers.uniq!
@@ -142,18 +140,19 @@ module AbstractController
         self._helper_methods += methods
 
         location = caller_locations(1, 1).first
-        file, line = location.path, location.lineno
+        file = location.path
+        line = location.lineno
 
         methods.each do |method|
           # def current_user(*args, &block)
           #   controller.send(:'current_user', *args, &block)
           # end
-          _helpers_for_modification.class_eval <<~ruby_eval.lines.map(&:strip).join(";"), file, line
+          _helpers_for_modification.class_eval <<~RUBY_EVAL.lines.map(&:strip).join(';'), file, line
             def #{method}(*args, &block)
               controller.send(:'#{method}', *args, &block)
             end
             ruby2_keywords(:'#{method}')
-          ruby_eval
+          RUBY_EVAL
         end
       end
 
@@ -211,6 +210,7 @@ module AbstractController
       def helper(*args, &block)
         modules_for_helpers(args).each do |mod|
           next if _helpers.include?(mod)
+
           _helpers_for_modification.include(mod)
         end
 
@@ -222,37 +222,36 @@ module AbstractController
       def clear_helpers
         inherited_helper_methods = _helper_methods
         self._helpers = Module.new
-        self._helper_methods = Array.new
+        self._helper_methods = []
 
         inherited_helper_methods.each { |meth| helper_method meth }
         default_helper_module! unless anonymous?
       end
 
       def _helpers_for_modification
-        unless @_helpers
-          self._helpers = define_helpers_module(self, superclass._helpers)
-        end
+        self._helpers = define_helpers_module(self, superclass._helpers) unless @_helpers
         _helpers
       end
 
       private
-        def define_helpers_module(klass, helpers = nil)
-          # In some tests inherited is called explicitly. In that case, just
-          # return the module from the first time it was defined
-          return klass.const_get(:HelperMethods) if klass.const_defined?(:HelperMethods, false)
 
-          mod = Module.new
-          klass.const_set(:HelperMethods, mod)
-          mod.include(helpers) if helpers
-          mod
-        end
+      def define_helpers_module(klass, helpers = nil)
+        # In some tests inherited is called explicitly. In that case, just
+        # return the module from the first time it was defined
+        return klass.const_get(:HelperMethods) if klass.const_defined?(:HelperMethods, false)
 
-        def default_helper_module!
-          helper_prefix = name.delete_suffix("Controller")
-          helper(helper_prefix)
-        rescue NameError => e
-          raise unless e.missing_name?("#{helper_prefix}Helper")
-        end
+        mod = Module.new
+        klass.const_set(:HelperMethods, mod)
+        mod.include(helpers) if helpers
+        mod
+      end
+
+      def default_helper_module!
+        helper_prefix = name.delete_suffix('Controller')
+        helper(helper_prefix)
+      rescue NameError => e
+        raise unless e.missing_name?("#{helper_prefix}Helper")
+      end
     end
   end
 end

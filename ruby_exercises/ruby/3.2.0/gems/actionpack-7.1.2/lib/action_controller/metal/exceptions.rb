@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 module ActionController
   class ActionControllerError < StandardError # :nodoc:
   end
@@ -7,7 +8,7 @@ module ActionController
   class BadRequest < ActionControllerError # :nodoc:
     def initialize(msg = nil)
       super(msg)
-      set_backtrace $!.backtrace if $!
+      set_backtrace $ERROR_INFO.backtrace if $ERROR_INFO
     end
   end
 
@@ -16,6 +17,7 @@ module ActionController
 
   class RoutingError < ActionControllerError # :nodoc:
     attr_reader :failures
+
     def initialize(message, failures = [])
       super(message)
       @failures = failures
@@ -60,7 +62,7 @@ module ActionController
   end
 
   class SessionOverflowError < ActionControllerError # :nodoc:
-    DEFAULT_MESSAGE = "Your session data is larger than the data column in which it is to be stored. You must increase the size of your data column if you intend to store large data."
+    DEFAULT_MESSAGE = 'Your session data is larger than the data column in which it is to be stored. You must increase the size of your data column if you intend to store large data.'
 
     def initialize(message = nil)
       super(message || DEFAULT_MESSAGE)
@@ -84,7 +86,7 @@ module ActionController
   #    end
   #  end
   class RespondToMismatchError < ActionControllerError
-    DEFAULT_MESSAGE = "respond_to was called multiple times and matched with conflicting formats in this action. Please note that you may only call respond_to and match on a single format per action."
+    DEFAULT_MESSAGE = 'respond_to was called multiple times and matched with conflicting formats in this action. Please note that you may only call respond_to and match on a single format per action.'
 
     def initialize(message = nil)
       super(message || DEFAULT_MESSAGE)

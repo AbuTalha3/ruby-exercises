@@ -16,9 +16,9 @@ module ActionController
       end
 
       def action_encoding_template(action) # :nodoc:
-        if @_parameter_encodings.has_key?(action.to_s)
-          @_parameter_encodings[action.to_s]
-        end
+        return unless @_parameter_encodings.key?(action.to_s)
+
+        @_parameter_encodings[action.to_s]
       end
 
       # Specify that a given action's parameters should all be encoded as

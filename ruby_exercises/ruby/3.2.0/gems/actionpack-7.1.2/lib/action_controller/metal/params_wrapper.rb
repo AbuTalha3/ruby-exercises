@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "active_support/core_ext/hash/slice"
-require "active_support/core_ext/hash/except"
-require "active_support/core_ext/module/anonymous"
-require "action_dispatch/http/mime_type"
+require 'active_support/core_ext/hash/slice'
+require 'active_support/core_ext/hash/except'
+require 'active_support/core_ext/module/anonymous'
+require 'action_dispatch/http/mime_type'
 
 module ActionController
   # = Action Controller Params Wrapper
@@ -82,11 +82,11 @@ module ActionController
   module ParamsWrapper
     extend ActiveSupport::Concern
 
-    EXCLUDE_PARAMETERS = %w(authenticity_token _method utf8)
+    EXCLUDE_PARAMETERS = %w[authenticity_token _method utf8].freeze
 
-    require "mutex_m"
+    require 'mutex_m'
 
-    class Options < Struct.new(:name, :format, :include, :exclude, :klass, :model) # :nodoc:
+    Options = Struct.new(:name, :format, :include, :exclude, :klass, :model) do # :nodoc:
       include Mutex_m
 
       def self.from_hash(hash)
@@ -116,26 +116,22 @@ module ActionController
 
           @include_set = true
 
-          unless super || exclude
-            if m.respond_to?(:attribute_names) && m.attribute_names.any?
-              self.include = m.attribute_names
+          if !(super || exclude) && (m.respond_to?(:attribute_names) && m.attribute_names.any?)
+            self.include = m.attribute_names
 
-              if m.respond_to?(:stored_attributes) && !m.stored_attributes.empty?
-                self.include += m.stored_attributes.values.flatten.map(&:to_s)
-              end
-
-              if m.respond_to?(:attribute_aliases) && m.attribute_aliases.any?
-                self.include += m.attribute_aliases.keys
-              end
-
-              if m.respond_to?(:nested_attributes_options) && m.nested_attributes_options.keys.any?
-                self.include += m.nested_attributes_options.keys.map do |key|
-                  (+key.to_s).concat("_attributes")
-                end
-              end
-
-              self.include
+            if m.respond_to?(:stored_attributes) && !m.stored_attributes.empty?
+              self.include += m.stored_attributes.values.flatten.map(&:to_s)
             end
+
+            self.include += m.attribute_aliases.keys if m.respond_to?(:attribute_aliases) && m.attribute_aliases.any?
+
+            if m.respond_to?(:nested_attributes_options) && m.nested_attributes_options.keys.any?
+              self.include += m.nested_attributes_options.keys.map do |key|
+                (+key.to_s).concat('_attributes')
+              end
+            end
+
+            self.include
           end
         end
       end
@@ -150,37 +146,44 @@ module ActionController
           @name_set = true
 
           unless super || klass.anonymous?
-            self.name = m ? m.to_s.demodulize.underscore :
-              klass.controller_name.singularize
+            self.name = if m
+                          m.to_s.demodulize.underscore
+                        else
+                          klass.controller_name.singularize
+                        end
           end
         end
       end
 
       private
-        # Determine the wrapper model from the controller's name. By convention,
-        # this could be done by trying to find the defined model that has the
-        # same singular name as the controller. For example, +UsersController+
-        # will try to find if the +User+ model exists.
-        #
-        # This method also does namespace lookup. Foo::Bar::UsersController will
-        # try to find Foo::Bar::User, Foo::User and finally User.
-        def _default_wrap_model
-          return nil if klass.anonymous?
-          model_name = klass.name.delete_suffix("Controller").classify
 
-          begin
-            if model_klass = model_name.safe_constantize
-              model_klass
-            else
-              namespaces = model_name.split("::")
-              namespaces.delete_at(-2)
-              break if namespaces.last == model_name
-              model_name = namespaces.join("::")
-            end
-          end until model_klass
+      # Determine the wrapper model from the controller's name. By convention,
+      # this could be done by trying to find the defined model that has the
+      # same singular name as the controller. For example, +UsersController+
+      # will try to find if the +User+ model exists.
+      #
+      # This method also does namespace lookup. Foo::Bar::UsersController will
+      # try to find Foo::Bar::User, Foo::User and finally User.
+      def _default_wrap_model
+        return nil if klass.anonymous?
 
-          model_klass
+        model_name = klass.name.delete_suffix('Controller').classify
+
+        loop do
+          if (model_klass = model_name.safe_constantize)
+            model_klass
+          else
+            namespaces = model_name.split('::')
+            namespaces.delete_at(-2)
+            break if namespaces.last == model_name
+
+            model_name = namespaces.join('::')
+          end
+          break if model_klass
         end
+
+        model_klass
+      end
     end
 
     included do
@@ -254,61 +257,62 @@ module ActionController
     end
 
     private
-      # Performs parameters wrapping upon the request. Called automatically
-      # by the metal call stack.
-      def process_action(*)
-        _perform_parameter_wrapping if _wrapper_enabled?
-        super
+
+    # Performs parameters wrapping upon the request. Called automatically
+    # by the metal call stack.
+    def process_action(*)
+      _perform_parameter_wrapping if _wrapper_enabled?
+      super
+    end
+
+    # Returns the wrapper key which will be used to store wrapped parameters.
+    def _wrapper_key
+      _wrapper_options.name
+    end
+
+    # Returns the list of enabled formats.
+    def _wrapper_formats
+      _wrapper_options.format
+    end
+
+    # Returns the list of parameters which will be selected for wrapped.
+    def _wrap_parameters(parameters)
+      { _wrapper_key => _extract_parameters(parameters) }
+    end
+
+    def _extract_parameters(parameters)
+      if (include_only = _wrapper_options.include)
+        parameters.slice(*include_only)
+      elsif _wrapper_options.exclude
+        exclude = _wrapper_options.exclude + EXCLUDE_PARAMETERS
+        parameters.except(*exclude)
+      else
+        parameters.except(*EXCLUDE_PARAMETERS)
       end
+    end
 
-      # Returns the wrapper key which will be used to store wrapped parameters.
-      def _wrapper_key
-        _wrapper_options.name
-      end
+    # Checks if we should perform parameters wrapping.
+    def _wrapper_enabled?
+      return false unless request.has_content_type?
 
-      # Returns the list of enabled formats.
-      def _wrapper_formats
-        _wrapper_options.format
-      end
+      ref = request.content_mime_type.ref
 
-      # Returns the list of parameters which will be selected for wrapped.
-      def _wrap_parameters(parameters)
-        { _wrapper_key => _extract_parameters(parameters) }
-      end
+      _wrapper_formats.include?(ref) && _wrapper_key && !request.parameters.key?(_wrapper_key)
+    rescue ActionDispatch::Http::Parameters::ParseError
+      false
+    end
 
-      def _extract_parameters(parameters)
-        if include_only = _wrapper_options.include
-          parameters.slice(*include_only)
-        elsif _wrapper_options.exclude
-          exclude = _wrapper_options.exclude + EXCLUDE_PARAMETERS
-          parameters.except(*exclude)
-        else
-          parameters.except(*EXCLUDE_PARAMETERS)
-        end
-      end
+    def _perform_parameter_wrapping
+      wrapped_hash = _wrap_parameters request.request_parameters
+      wrapped_keys = request.request_parameters.keys
+      wrapped_filtered_hash = _wrap_parameters request.filtered_parameters.slice(*wrapped_keys)
 
-      # Checks if we should perform parameters wrapping.
-      def _wrapper_enabled?
-        return false unless request.has_content_type?
+      # This will make the wrapped hash accessible from controller and view.
+      request.parameters.merge! wrapped_hash
+      request.request_parameters.merge! wrapped_hash
 
-        ref = request.content_mime_type.ref
-
-        _wrapper_formats.include?(ref) && _wrapper_key && !request.parameters.key?(_wrapper_key)
-      rescue ActionDispatch::Http::Parameters::ParseError
-        false
-      end
-
-      def _perform_parameter_wrapping
-        wrapped_hash = _wrap_parameters request.request_parameters
-        wrapped_keys = request.request_parameters.keys
-        wrapped_filtered_hash = _wrap_parameters request.filtered_parameters.slice(*wrapped_keys)
-
-        # This will make the wrapped hash accessible from controller and view.
-        request.parameters.merge! wrapped_hash
-        request.request_parameters.merge! wrapped_hash
-
-        # This will display the wrapped hash in the log file.
-        request.filtered_parameters.merge! wrapped_filtered_hash
-      end
+      # This will display the wrapped hash in the log file.
+      request.filtered_parameters.merge! wrapped_filtered_hash
+    end
   end
 end

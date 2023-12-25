@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -5,7 +6,6 @@ RSpec.configure do |config|
   end
 
   config.mock_with :rspec do |mocks|
-
     mocks.verify_partial_doubles = true
   end
 
@@ -13,8 +13,7 @@ RSpec.configure do |config|
 end
 
 module FormatterOverrides
-  def dump_pending(_)
-  end
+  def dump_pending(_); end
 end
 
 RSpec::Core::Formatters::DocumentationFormatter.prepend FormatterOverrides

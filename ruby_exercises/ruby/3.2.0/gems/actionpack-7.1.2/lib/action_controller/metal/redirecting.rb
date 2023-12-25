@@ -82,7 +82,7 @@ module ActionController
     #
     # See #url_from for more information on what an internal and safe URL is, or how to fall back to an alternate redirect URL in the unsafe case.
     def redirect_to(options = {}, response_options = {})
-      raise ActionControllerError.new("Cannot redirect to nil!") unless options
+      raise ActionControllerError, 'Cannot redirect to nil!' unless options
       raise AbstractController::DoubleRenderError if response_body
 
       allow_other_host = response_options.delete(:allow_other_host) { _allow_other_host }
@@ -93,7 +93,7 @@ module ActionController
       _ensure_url_is_http_header_safe(redirect_to_location)
 
       self.location      = _enforce_open_redirect_protection(redirect_to_location, allow_other_host: allow_other_host)
-      self.response_body = ""
+      self.response_body = ''
     end
 
     # Soft deprecated alias for #redirect_back_or_to where the +fallback_location+ location is supplied as a keyword argument instead
@@ -140,7 +140,7 @@ module ActionController
       # characters; and is terminated by a colon (":").
       # See https://tools.ietf.org/html/rfc3986#section-3.1
       # The protocol relative scheme starts with a double slash "//".
-      when /\A([a-z][a-z\d\-+.]*:|\/\/).*/i
+      when %r{\A([a-z][a-z\d\-+.]*:|//).*}i
         options.to_str
       when String
         request.protocol + request.host_with_port + options
@@ -178,48 +178,51 @@ module ActionController
     end
 
     private
-      def _allow_other_host
-        !raise_on_open_redirects
-      end
 
-      def _extract_redirect_to_status(options, response_options)
-        if options.is_a?(Hash) && options.key?(:status)
-          Rack::Utils.status_code(options.delete(:status))
-        elsif response_options.key?(:status)
-          Rack::Utils.status_code(response_options[:status])
-        else
-          302
-        end
-      end
+    def _allow_other_host
+      !raise_on_open_redirects
+    end
 
-      def _enforce_open_redirect_protection(location, allow_other_host:)
-        if allow_other_host || _url_host_allowed?(location)
-          location
-        else
-          raise UnsafeRedirectError, "Unsafe redirect to #{location.truncate(100).inspect}, pass allow_other_host: true to redirect anyway."
-        end
+    def _extract_redirect_to_status(options, response_options)
+      if options.is_a?(Hash) && options.key?(:status)
+        Rack::Utils.status_code(options.delete(:status))
+      elsif response_options.key?(:status)
+        Rack::Utils.status_code(response_options[:status])
+      else
+        302
       end
+    end
 
-      def _url_host_allowed?(url)
-        host = URI(url.to_s).host
-
-        return true if host == request.host
-        return false unless host.nil?
-        return false unless url.to_s.start_with?("/")
-        !url.to_s.start_with?("//")
-      rescue ArgumentError, URI::Error
-        false
+    def _enforce_open_redirect_protection(location, allow_other_host:)
+      if allow_other_host || _url_host_allowed?(location)
+        location
+      else
+        raise UnsafeRedirectError,
+              "Unsafe redirect to #{location.truncate(100).inspect}, pass allow_other_host: true to redirect anyway."
       end
+    end
 
-      def _ensure_url_is_http_header_safe(url)
-        # Attempt to comply with the set of valid token characters
-        # defined for an HTTP header value in
-        # https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.6
-        if url.match?(ILLEGAL_HEADER_VALUE_REGEX)
-          msg = "The redirect URL #{url} contains one or more illegal HTTP header field character. " \
-            "Set of legal characters defined in https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.6"
-          raise UnsafeRedirectError, msg
-        end
-      end
+    def _url_host_allowed?(url)
+      host = URI(url.to_s).host
+
+      return true if host == request.host
+      return false unless host.nil?
+      return false unless url.to_s.start_with?('/')
+
+      !url.to_s.start_with?('//')
+    rescue ArgumentError, URI::Error
+      false
+    end
+
+    def _ensure_url_is_http_header_safe(url)
+      # Attempt to comply with the set of valid token characters
+      # defined for an HTTP header value in
+      # https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.6
+      return unless url.match?(ILLEGAL_HEADER_VALUE_REGEX)
+
+      msg = "The redirect URL #{url} contains one or more illegal HTTP header field character. " \
+        'Set of legal characters defined in https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.6'
+      raise UnsafeRedirectError, msg
+    end
   end
 end

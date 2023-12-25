@@ -19,9 +19,10 @@ module AbstractController
       end
 
       private
-        def cache_configured?
-          perform_caching && cache_store
-        end
+
+      def cache_configured?
+        perform_caching && cache_store
+      end
     end
 
     include ConfigMethods
@@ -31,7 +32,7 @@ module AbstractController
       extend ConfigMethods
 
       config_accessor :default_static_extension
-      self.default_static_extension ||= ".html"
+      self.default_static_extension ||= '.html'
 
       config_accessor :perform_caching
       self.perform_caching = true if perform_caching.nil?
@@ -54,13 +55,15 @@ module AbstractController
     end
 
     private
-      # Convenience accessor.
-      def cache(key, options = {}, &block) # :doc:
-        if cache_configured?
-          cache_store.fetch(ActiveSupport::Cache.expand_cache_key(key, :controller), options, &block)
-        else
-          yield
-        end
+
+    # Convenience accessor.
+    # :doc:
+    def cache(key, options = {}, &block)
+      if cache_configured?
+        cache_store.fetch(ActiveSupport::Cache.expand_cache_key(key, :controller), options, &block)
+      else
+        yield
       end
+    end
   end
 end

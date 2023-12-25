@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "action_view"
-require "action_controller"
-require "action_controller/log_subscriber"
+require 'action_view'
+require 'action_controller'
+require 'action_controller/log_subscriber'
 
 module ActionController
   # = Action Controller \API
@@ -140,7 +140,7 @@ module ActionController
       # Params wrapper should come before instrumentation so they are
       # properly showed in logs
       ParamsWrapper
-    ]
+    ].freeze
 
     MODULES.each do |mod|
       include mod

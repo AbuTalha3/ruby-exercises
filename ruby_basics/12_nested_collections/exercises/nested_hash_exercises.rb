@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def find_language_information(languages, language_name)
   # Take languages (a nested hash) and language_name as a symbol, return the
   # value for the language_name key (which will be another hash!)

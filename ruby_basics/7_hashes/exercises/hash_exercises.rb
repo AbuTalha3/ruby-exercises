@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def create_favorite_hash(color, number)
   # return a hash with the following key/value pairs:
   # key of color (as a symbol) with value of the color argument
@@ -12,7 +14,7 @@ def favorite_number(favorite_list)
   # use #fetch to return the value of the number key or 42 if the key is not found
 end
 
-def update_favorite_movie(favorite_list, movie)
+def update_favorite_movie(favorite_list, _movie)
   # Step 1: add/update the key of movie (as a symbol)
 
   # Step 2: return the hash (because Step 1 returns the value of the movie key)

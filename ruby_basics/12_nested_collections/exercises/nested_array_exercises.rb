@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def blank_seating_chart(number_of_rows, seats_per_row)
   # return a 2d array to represent a seating chart that contains
   # number_of_rows nested arrays, each with seats_per_row entries of nil to

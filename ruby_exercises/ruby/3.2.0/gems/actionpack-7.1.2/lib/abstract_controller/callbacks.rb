@@ -31,7 +31,10 @@ module AbstractController
 
     included do
       define_callbacks :process_action,
-                       terminator: ->(controller, result_lambda) { result_lambda.call; controller.performed? },
+                       terminator: lambda { |controller, result_lambda|
+                                     result_lambda.call
+                                     controller.performed?
+                                   },
                        skip_after_callbacks_if_terminated: true
       mattr_accessor :raise_on_missing_callback_actions, default: false
     end
@@ -97,11 +100,11 @@ module AbstractController
       end
 
       def _normalize_callback_option(options, from, to) # :nodoc:
-        if from_value = options.delete(from)
-          filters = options[:filters]
-          from_value = ActionFilter.new(filters, from, from_value)
-          options[to] = Array(options[to]).unshift(from_value)
-        end
+        return unless (from_value = options.delete(from))
+
+        filters = options[:filters]
+        from_value = ActionFilter.new(filters, from, from_value)
+        options[to] = Array(options[to]).unshift(from_value)
       end
 
       # Take callback names and an optional callback proc, normalize them,
@@ -225,7 +228,7 @@ module AbstractController
 
       # set up before_action, prepend_before_action, skip_before_action, etc.
       # for each of before, after, and around.
-      [:before, :after, :around].each do |callback|
+      %i[before after around].each do |callback|
         define_method "#{callback}_action" do |*names, &blk|
           _insert_callbacks(names, blk) do |name, options|
             set_callback(:process_action, callback, name, options)
@@ -252,12 +255,13 @@ module AbstractController
     end
 
     private
-      # Override <tt>AbstractController::Base#process_action</tt> to run the
-      # <tt>process_action</tt> callbacks around the normal behavior.
-      def process_action(...)
-        run_callbacks(:process_action) do
-          super
-        end
+
+    # Override <tt>AbstractController::Base#process_action</tt> to run the
+    # <tt>process_action</tt> callbacks around the normal behavior.
+    def process_action(...)
+      run_callbacks(:process_action) do
+        super
       end
+    end
   end
 end

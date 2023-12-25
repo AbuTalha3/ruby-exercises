@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "active_support/core_ext/object/try"
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/object/try'
+require 'active_support/core_ext/integer/time'
 
 module ActionController
   module ConditionalGet
@@ -125,17 +125,18 @@ module ActionController
     #
     #   before_action { fresh_when @article, template: "widgets/show" }
     #
-    def fresh_when(object = nil, etag: nil, weak_etag: nil, strong_etag: nil, last_modified: nil, public: false, cache_control: {}, template: nil)
+    def fresh_when(object = nil, etag: nil, weak_etag: nil, strong_etag: nil, last_modified: nil, public: false,
+                   cache_control: {}, template: nil)
       response.cache_control.delete(:no_store)
       weak_etag ||= etag || object unless strong_etag
       last_modified ||= object.try(:updated_at) || object.try(:maximum, :updated_at)
 
       if strong_etag
         response.strong_etag = combine_etags strong_etag,
-          last_modified: last_modified, public: public, template: template
+                                             last_modified: last_modified, public: public, template: template
       elsif weak_etag || template
         response.weak_etag = combine_etags weak_etag,
-          last_modified: last_modified, public: public, template: template
+                                           last_modified: last_modified, public: public, template: template
       end
 
       response.last_modified = last_modified if last_modified
@@ -278,7 +279,7 @@ module ActionController
         public: options.delete(:public),
         must_revalidate: options.delete(:must_revalidate),
         stale_while_revalidate: options.delete(:stale_while_revalidate),
-        stale_if_error: options.delete(:stale_if_error),
+        stale_if_error: options.delete(:stale_if_error)
       )
       options.delete(:private)
 
@@ -316,8 +317,9 @@ module ActionController
     end
 
     private
-      def combine_etags(validator, options)
-        [validator, *etaggers.map { |etagger| instance_exec(options, &etagger) }].compact
-      end
+
+    def combine_etags(validator, options)
+      [validator, *etaggers.map { |etagger| instance_exec(options, &etagger) }].compact
+    end
   end
 end

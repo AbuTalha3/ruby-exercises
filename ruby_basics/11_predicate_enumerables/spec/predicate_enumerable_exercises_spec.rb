@@ -1,23 +1,23 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require_relative '../exercises/predicate_enumerable_exercises'
 
 RSpec.describe 'Predicate Enumerable Exercises' do
-
   describe 'coffee drink exercise' do
-
     it 'returns true when coffee is included' do
-      drink_list = ["coffee", "water", "tea"]
+      drink_list = %w[coffee water tea]
       expect(coffee_drink?(drink_list)).to be true
     end
 
     # remove the 'x' from the line below to unskip the test
     xit 'returns true when espresso is included' do
-      drink_list = ["milk", "juice", "espresso"]
+      drink_list = %w[milk juice espresso]
       expect(coffee_drink?(drink_list)).to be true
     end
 
     xit 'returns false when coffee or espresso is not included' do
-      drink_list = ["tea", "water", "milk"]
+      drink_list = %w[tea water milk]
       expect(coffee_drink?(drink_list)).to be false
     end
 
@@ -28,7 +28,6 @@ RSpec.describe 'Predicate Enumerable Exercises' do
   end
 
   describe 'correct guess exercise' do
-
     xit 'returns true when the list contains the answer' do
       guess_list = [2, 3, 4, 5]
       answer = 5
@@ -49,7 +48,6 @@ RSpec.describe 'Predicate Enumerable Exercises' do
   end
 
   describe 'twenty-first century years exercise' do
-
     xit 'returns true when all of the years are between 2001 and 2100' do
       year_list = [2001, 2002, 2099, 2100]
       expect(twenty_first_century_years?(year_list)).to be true
@@ -67,14 +65,13 @@ RSpec.describe 'Predicate Enumerable Exercises' do
   end
 
   describe 'correct format exercise' do
-
     xit 'returns true when none of the words in the list are in upcase' do
-      word_list = ["Pepsi", "Coke", "Dr. Pepper"]
+      word_list = ['Pepsi', 'Coke', 'Dr. Pepper']
       expect(correct_format?(word_list)).to be true
     end
 
     xit 'returns false when at least one word in the list is in upcase' do
-      word_list = ["PEPSI", "Coke", "Dr. Pepper"]
+      word_list = ['PEPSI', 'Coke', 'Dr. Pepper']
       expect(correct_format?(word_list)).to be false
     end
 
@@ -85,7 +82,6 @@ RSpec.describe 'Predicate Enumerable Exercises' do
   end
 
   describe 'valid scores exercise' do
-
     xit 'returns true when only one score is a 10' do
       score_list = { easy_to_read: 10, uses_best_practices: 8, clever: 7 }
       perfect_score = 10

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "set"
+require 'set'
 
 module ActionController
   # See Renderers.add
@@ -143,22 +143,20 @@ module ActionController
 
     def _render_to_body_with_renderer(options)
       _renderers.each do |name|
-        if options.key?(name)
-          _process_options(options)
-          method_name = Renderers._render_with_renderer_method_name(name)
-          return send(method_name, options.delete(name), options)
-        end
+        next unless options.key?(name)
+
+        _process_options(options)
+        method_name = Renderers._render_with_renderer_method_name(name)
+        return send(method_name, options.delete(name), options)
       end
       nil
     end
 
     add :json do |json, options|
-      json = json.to_json(options) unless json.kind_of?(String)
+      json = json.to_json(options) unless json.is_a?(String)
 
       if options[:callback].present?
-        if media_type.nil? || media_type == Mime[:json]
-          self.content_type = Mime[:js]
-        end
+        self.content_type = Mime[:js] if media_type.nil? || media_type == Mime[:json]
 
         "/**/#{options[:callback]}(#{json})"
       else

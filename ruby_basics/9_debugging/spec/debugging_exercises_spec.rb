@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require_relative '../exercises/debugging_exercises'
 
 RSpec.describe 'Debugging Exercises' do
   describe 'decrement_smallest_value' do
-
     # remove the 'x' from the line below to unskip the test
     it 'Returns 0 after you use the stack trace to find and fix the error' do
       nested_array = [[3, 4], [1, 2]]
@@ -15,7 +16,6 @@ RSpec.describe 'Debugging Exercises' do
   end
 
   describe 'increment_greatest_value' do
-
     # remove the 'x' from the line below to unskip the test
     xit 'Returns 5 after you use the stack trace to find and fix the error' do
       nested_array = [[3, 4], [1, 2]]
@@ -27,20 +27,16 @@ RSpec.describe 'Debugging Exercises' do
   end
 
   describe 'isogram' do
-
     # remove the 'x' from the line below to unskip the test
     xit 'Returns true after you use puts to fix the method, since Odin is an isogram' do
-
-      expect(isogram?("Odin")).to be true
+      expect(isogram?('Odin')).to be true
     end
   end
 
   describe 'yell_greeting' do
-
     # remove the 'x' from the line below to unskip the test
     xit 'Returns "WASSAP, BOB!" after you use pry-byebug to fix the method' do
-
-      expect(yell_greeting("Bob")).to eq("WASSAP, BOB!")
+      expect(yell_greeting('Bob')).to eq('WASSAP, BOB!')
     end
   end
 end

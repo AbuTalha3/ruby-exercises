@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "abstract_controller/error"
-require "action_view"
-require "action_view/view_paths"
-require "set"
+require 'abstract_controller/error'
+require 'action_view'
+require 'action_view/view_paths'
+require 'set'
 
 module AbstractController
   class DoubleRenderError < Error
-    DEFAULT_MESSAGE = "Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like \"redirect_to(...); return\"."
+    DEFAULT_MESSAGE = 'Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...); return".'
 
     def initialize(message = nil)
       super(message || DEFAULT_MESSAGE)
@@ -46,15 +46,14 @@ module AbstractController
     end
 
     # Performs the actual template rendering.
-    def render_to_body(options = {})
-    end
+    def render_to_body(options = {}); end
 
     # Returns +Content-Type+ of rendered content.
     def rendered_format
       Mime[:text]
     end
 
-    DEFAULT_PROTECTED_INSTANCE_VARIABLES = %i(@_action_name @_response_body @_formats @_prefixes)
+    DEFAULT_PROTECTED_INSTANCE_VARIABLES = %i[@_action_name @_response_body @_formats @_prefixes].freeze
 
     # This method should return a hash with assigns.
     # You can overwrite this configuration per controller.
@@ -66,17 +65,20 @@ module AbstractController
       end
     end
 
-  private
+    private
+
     # Normalize args by converting <tt>render "foo"</tt> to
     # <tt>render action: "foo"</tt> and <tt>render "foo/bar"</tt> to
     # <tt>render file: "foo/bar"</tt>.
-    def _normalize_args(action = nil, options = {}) # :doc:
+    # :doc:
+    def _normalize_args(action = nil, options = {})
       if action.respond_to?(:permitted?)
-        if action.permitted?
-          action
-        else
-          raise ArgumentError, "render parameters are not permitted"
-        end
+        raise ArgumentError, 'render parameters are not permitted' unless action.permitted?
+
+        action
+
+
+
       elsif action.is_a?(Hash)
         action
       else
@@ -85,12 +87,14 @@ module AbstractController
     end
 
     # Normalize options.
-    def _normalize_options(options) # :doc:
+    # :doc:
+    def _normalize_options(options)
       options
     end
 
     # Process extra options.
-    def _process_options(options) # :doc:
+    # :doc:
+    def _process_options(options)
       options
     end
 
@@ -98,8 +102,7 @@ module AbstractController
     def _process_format(format) # :nodoc:
     end
 
-    def _process_variant(options)
-    end
+    def _process_variant(options); end
 
     def _set_html_content_type # :nodoc:
     end

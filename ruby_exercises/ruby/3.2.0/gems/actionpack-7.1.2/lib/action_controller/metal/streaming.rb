@@ -215,11 +215,11 @@ module ActionController # :nodoc:
 
       # For each element yielded by the response body, yield
       # the element in chunked encoding.
-      def each(&block)
+      def each
         term = TERM
         @body.each do |chunk|
           size = chunk.bytesize
-          next if size == 0
+          next if size.zero?
 
           yield [size.to_s(16), term, chunk.b, term].join
         end
@@ -234,27 +234,28 @@ module ActionController # :nodoc:
     end
 
     private
-      # Set proper cache control and transfer encoding when streaming
-      def _process_options(options)
-        super
-        if options[:stream]
-          if request.version == "HTTP/1.0"
-            options.delete(:stream)
-          else
-            headers["Cache-Control"] ||= "no-cache"
-            headers["Transfer-Encoding"] = "chunked"
-            headers.delete("Content-Length")
-          end
-        end
-      end
 
-      # Call render_body if we are streaming instead of usual +render+.
-      def _render_template(options)
-        if options.delete(:stream)
-          Body.new view_renderer.render_body(view_context, options)
-        else
-          super
-        end
+    # Set proper cache control and transfer encoding when streaming
+    def _process_options(options)
+      super
+      return unless options[:stream]
+
+      if request.version == 'HTTP/1.0'
+        options.delete(:stream)
+      else
+        headers['Cache-Control'] ||= 'no-cache'
+        headers['Transfer-Encoding'] = 'chunked'
+        headers.delete('Content-Length')
       end
+    end
+
+    # Call render_body if we are streaming instead of usual +render+.
+    def _render_template(options)
+      if options.delete(:stream)
+        Body.new view_renderer.render_body(view_context, options)
+      else
+        super
+      end
+    end
   end
 end

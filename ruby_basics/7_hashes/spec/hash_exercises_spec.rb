@@ -1,33 +1,33 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require_relative '../exercises/hash_exercises'
 
 RSpec.describe 'Hash Exercises' do
   describe 'create favorite hash exercise' do
-
     it 'returns result with a string and integer' do
       favorite = create_favorite_hash('blue', 65)
       result = { color: 'blue', number: 65 }
       expect(favorite).to eq(result)
     end
-    
+
     # remove the 'x' from the line below to unskip the test
     xit 'returns result with an array and hash' do
-      favorite = create_favorite_hash(['orange', 'green'], { lucky: 7 })
-      result = { color: ['orange', 'green'], number: { lucky: 7 } }
+      favorite = create_favorite_hash(%w[orange green], { lucky: 7 })
+      result = { color: %w[orange green], number: { lucky: 7 } }
       expect(favorite).to eq(result)
     end
   end
 
   describe 'favorite color exercise' do
-
     xit 'returns a string' do
       my_favorites = { color: 'blue', number: 65 }
       expect(favorite_color(my_favorites)).to eq('blue')
     end
-    
+
     xit 'returns an array' do
-      my_favorites = { color: ['orange', 'green'], number: { lucky: 7 } }
-      expect(favorite_color(my_favorites)).to eq(['orange', 'green'])
+      my_favorites = { color: %w[orange green], number: { lucky: 7 } }
+      expect(favorite_color(my_favorites)).to eq(%w[orange green])
     end
 
     xit 'returns nil when the key is not found' do
@@ -37,25 +37,23 @@ RSpec.describe 'Hash Exercises' do
   end
 
   describe 'favorite number exercise' do
-
     xit 'returns an integer' do
       my_favorites = { color: 'blue', number: 65 }
       expect(favorite_number(my_favorites)).to eq(65)
     end
 
     xit 'returns a hash' do
-      my_favorites = { color: ['orange', 'green'], number: { lucky: 7 } }
+      my_favorites = { color: %w[orange green], number: { lucky: 7 } }
       expect(favorite_number(my_favorites)).to eq({ lucky: 7 })
     end
 
     xit 'returns the default number when the key is not found' do
-      my_favorites = { color: ['orange', 'green'], movie: 'Avengers: Endgame' }
+      my_favorites = { color: %w[orange green], movie: 'Avengers: Endgame' }
       expect(favorite_number(my_favorites)).to eq(42)
     end
   end
 
   describe 'update favorite movie exercise' do
-
     xit 'returns hash with a new key/value pair when not included' do
       my_favorites = { color: 'blue', number: 65 }
       result = { color: 'blue', number: 65, movie: 'Avengers: Endgame' }
@@ -70,7 +68,6 @@ RSpec.describe 'Hash Exercises' do
   end
 
   describe 'remove favorite number exercise' do
-
     xit 'returns hash without key/value pair when included' do
       my_favorites = { color: 'blue', number: 65, movie: 'Avengers: Endgame' }
       result = { color: 'blue', movie: 'Avengers: Endgame' }
@@ -84,10 +81,9 @@ RSpec.describe 'Hash Exercises' do
   end
 
   describe 'favorite categories exercise' do
-
     xit 'returns an array of the keys' do
       my_favorites = { color: 'blue', number: 65, movie: 'Avengers: Endgame' }
-      expect(favorite_categories(my_favorites)).to eq([:color, :number, :movie])
+      expect(favorite_categories(my_favorites)).to eq(%i[color number movie])
     end
 
     xit 'returns an empty array when hash is empty' do
@@ -97,15 +93,14 @@ RSpec.describe 'Hash Exercises' do
   end
 
   describe 'favorite items exercise' do
-
     xit 'returns an array with the string and integer values' do
       my_favorites = { color: 'blue', number: 65, movie: 'Avengers: Endgame' }
       expect(favorite_items(my_favorites)).to eq(['blue', 65, 'Avengers: Endgame'])
     end
 
     xit 'returns an array with the array and hash values' do
-      my_favorites = { color: ['orange', 'green'], number: { lucky: 7 } }
-      expect(favorite_items(my_favorites)).to eq([['orange', 'green'], { lucky: 7 }])
+      my_favorites = { color: %w[orange green], number: { lucky: 7 } }
+      expect(favorite_items(my_favorites)).to eq([%w[orange green], { lucky: 7 }])
     end
 
     xit 'returns an empty array when hash is empty' do
@@ -115,7 +110,6 @@ RSpec.describe 'Hash Exercises' do
   end
 
   describe 'merge favorites exercise' do
-
     xit 'returns a hash with all key/value pairs when there is not a duplicate' do
       my_favorites = { color: 'blue', number: 65 }
       favorite_movie = { movie: 'Avengers: Endgame' }

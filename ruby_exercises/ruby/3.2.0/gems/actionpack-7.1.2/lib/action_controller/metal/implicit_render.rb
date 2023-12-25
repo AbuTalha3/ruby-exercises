@@ -46,20 +46,19 @@ module ActionController
         message = "#{self.class.name}\##{action_name} is missing a template for request formats: #{request.formats.map(&:to_s).join(',')}"
         raise ActionController::MissingExactTemplate.new(message, self.class, action_name)
       else
-        logger.info "No template found for #{self.class.name}\##{action_name}, rendering head :no_content" if logger
+        logger&.info "No template found for #{self.class.name}\##{action_name}, rendering head :no_content"
         super
       end
     end
 
     def method_for_action(action_name)
-      super || if template_exists?(action_name.to_s, _prefixes)
-                 "default_render"
-               end
+      super || ('default_render' if template_exists?(action_name.to_s, _prefixes))
     end
 
     private
-      def interactive_browser_request?
-        request.get? && request.format == Mime[:html] && !request.xhr?
-      end
+
+    def interactive_browser_request?
+      request.get? && request.format == Mime[:html] && !request.xhr?
+    end
   end
 end

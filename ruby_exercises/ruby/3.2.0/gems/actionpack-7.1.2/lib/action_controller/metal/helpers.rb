@@ -86,7 +86,7 @@ module ActionController
       # using {helper}[rdoc-ref:AbstractController::Helpers::ClassMethods#helper]
       # instead when using +capture+.
       def helpers
-        @helper_proxy ||= begin
+        @helpers ||= begin
           proxy = ActionView::Base.empty
           proxy.config = config.inheritable_copy
           proxy.extend(_helpers)
@@ -107,15 +107,16 @@ module ActionController
       end
 
       private
-        # Extract helper names from files in <tt>app/helpers/**/*_helper.rb</tt>
-        def all_application_helpers
-          all_helpers_from_path(helpers_path)
-        end
+
+      # Extract helper names from files in <tt>app/helpers/**/*_helper.rb</tt>
+      def all_application_helpers
+        all_helpers_from_path(helpers_path)
+      end
     end
 
     # Provides a proxy to access helper methods from outside the view.
     def helpers
-      @_helper_proxy ||= view_context
+      @helpers ||= view_context
     end
   end
 end
